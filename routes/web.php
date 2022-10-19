@@ -22,7 +22,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/component', function () {
-    return view('tests.component01');
+    $message = 'this is a message.';
+    return view('tests.component01', compact('message'));
 });
 
 require __DIR__.'/auth.php';
