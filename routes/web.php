@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ServiceTestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,8 @@ Route::get('/component', function () {
     $message = 'this is a message.';
     return view('tests.component01', compact('message'));
 });
+
+Route::get('/servicetest', [ServiceTestController::class, 'showService']);
+Route::get('/serviceprovider', [ServiceTestController::class, 'showServiceProvider']);
 
 require __DIR__.'/auth.php';
