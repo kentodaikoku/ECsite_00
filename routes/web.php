@@ -22,11 +22,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+// コンポーネント練習用
 Route::get('/component', function () {
     $message = 'this is a message.';
     return view('tests.component01', compact('message'));
 });
-
+// laravelライフサイクル練習用
 Route::get('/servicetest', [ServiceTestController::class, 'showService']);
 Route::get('/serviceprovider', [ServiceTestController::class, 'showServiceProvider']);
 
