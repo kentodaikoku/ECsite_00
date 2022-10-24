@@ -16,11 +16,11 @@ use App\Http\Controllers\ServiceTestController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('user.dashboard');
 })->middleware(['auth:users'])->name('dashboard');
 
 // コンポーネント練習用
