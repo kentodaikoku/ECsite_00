@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth:users'])->name('dashboard');
 
 // コンポーネント練習用
 Route::get('/component', function () {

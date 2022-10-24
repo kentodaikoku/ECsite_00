@@ -51,6 +51,7 @@ class LoginRequest extends FormRequest
         $guard = $this->routeIs('admin.*') ? 'admin' : '';
         $guard = $this->routeIs('user.*') ? 'users' : '';
 
+        // ガードごとのリクエストチェック
         if (! Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
