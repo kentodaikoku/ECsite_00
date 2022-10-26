@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class OwnersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class OwnersController extends Controller
      */
     public function index()
     {
-        //
+        dd('this is owners list from admin');
     }
 
     /**

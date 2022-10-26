@@ -20,7 +20,7 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin'])->name('dashboard');
 
-// Route::resource('admin', OwnersController::class)->middleware('auth:admin');
+Route::resource('owners', OwnersController::class)->middleware('auth:admin');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create']) //ユーザー登録画面
