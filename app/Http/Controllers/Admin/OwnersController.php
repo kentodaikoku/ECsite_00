@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Owner;
+use Illuminate\Support\Facades\DB;
+
 class OwnersController extends Controller
 {
     public function __construct()
@@ -12,14 +15,16 @@ class OwnersController extends Controller
         $this->middleware('auth:admin');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        dd('this is owners list from admin');
+        $owner = Owner::all();
+        $q_owner = DB::table('owners')->select('name')->get();
+        $q_first = DB::table('owners')->select('name')->first();
+        $collect = collect([
+            'name' => 'test'
+        ]);
+
+        dd($owner, $q_owner, $q_first, $collect);
     }
 
     /**
