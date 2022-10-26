@@ -19,7 +19,7 @@ class OwnersController extends Controller
 
     public function index()
     {
-        $owners = Owner::select('name', 'email', 'created_at')->get();
+        $owners = Owner::select('id', 'name', 'email', 'created_at')->get();
         $q_owner = DB::table('owners')->select('name')->get();
         // $q_first = DB::table('owners')->select('name')->first();
         // $collect = collect([
@@ -63,15 +63,11 @@ class OwnersController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $owner = Owner::findOrFail($id);
+
+        return view('admin.owners.edit', compact('owner'));
     }
 
     /**
@@ -83,7 +79,21 @@ class OwnersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:owners'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        
+        $owner = Owner::findOrFail($id);
+
+        $owner->name = $request->name;
+        $owner->email = $request->email;
+        $owner->password = $request->password;
+
+        $owner->save();
+
+        return redirect()->route('admin.owners.index')->with('msg', '登録内容を更新しました。');
     }
 
     /**
