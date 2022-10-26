@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ServiceTestController;
 
 /*
@@ -15,12 +16,12 @@ use App\Http\Controllers\ServiceTestController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    return view('user.dashboard');
+})->middleware(['auth:users'])->name('dashboard');
 
 // コンポーネント練習用
 Route::get('/component', function () {

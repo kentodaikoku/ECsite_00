@@ -11,10 +11,11 @@ return [
     | reset options for your application. You may change these defaults
     | as required, but they're a perfect start for most applications.
     |
+    | デフォルトの認証モードを設定
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'users',
         'passwords' => 'users',
     ],
 
@@ -33,12 +34,28 @@ return [
     |
     | Supported: "session"
     |
+    |ガードの設定
     */
 
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        'users' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'owners' => [
+            'driver' => 'session',
+            'provider' => 'owners',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
         ],
     ],
 
@@ -57,12 +74,23 @@ return [
     |
     | Supported: "database", "eloquent"
     |
+    | プロバイダーによって対応させるモデルを定義する
     */
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'owners' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Owner::class,
+        ],
+
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -84,12 +112,27 @@ return [
     | considered valid. This security feature keeps tokens short-lived so
     | they have less time to be guessed. You may change this as needed.
     |
+    |パスワードリセットのモデルごとにテーブルなど設定
     */
 
     'passwords' => [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'owners' => [
+            'provider' => 'owners',
+            'table' => 'owner_password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admin' => [
+            'provider' => 'admin',
+            'table' => 'admin_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

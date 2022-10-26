@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Stmt\Const_;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,8 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
+    public const OWNER_HOME = '/owner/dashbord';
+    public const ADMIN_HOME = '/admin/dashbord';
 
     /**
      * The controller namespace for the application.
@@ -43,7 +46,21 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
+            Route::prefix('owner')
+                ->as('owner.')
+                ->middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/owner.php'));
+
+            Route::prefix('admin')
+                ->as('admin.')
+                ->middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/admin.php'));
+
+            Route::prefix('/')
+                ->as('user.')
+                ->middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
