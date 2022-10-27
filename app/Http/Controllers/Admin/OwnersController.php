@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Owner;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
 class OwnersController extends Controller
@@ -20,7 +21,7 @@ class OwnersController extends Controller
     public function index()
     {
         $owners = Owner::select('id', 'name', 'email', 'created_at')->get();
-        $q_owner = DB::table('owners')->select('name')->get();
+        // $q_owner = DB::table('owners')->select('name')->get();
         // $q_first = DB::table('owners')->select('name')->first();
         // $collect = collect([
         //     'name' => 'test'
@@ -49,7 +50,10 @@ class OwnersController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect()->route('admin.owners.index')->with('msg', '登録完了しました。');
+        return redirect()->route('admin.owners.index')->with([
+            'msg' => '登録完了しました。',
+            'status' => 'info'
+        ]);
     }
 
     /**
@@ -79,21 +83,23 @@ class OwnersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $owner = Owner::findOrFail($id);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:owners'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('owners')->ignore($owner->id)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        
-        $owner = Owner::findOrFail($id);
 
         $owner->name = $request->name;
         $owner->email = $request->email;
-        $owner->password = $request->password;
-
+        $owner->password = Hash::make($request->password);
         $owner->save();
 
-        return redirect()->route('admin.owners.index')->with('msg', '登録内容を更新しました。');
+        return redirect()->route('admin.owners.index')->with([
+            'msg' => '登録内容を更新しました。',
+            'status' => 'info'
+        ]);
     }
 
     /**
@@ -104,6 +110,11 @@ class OwnersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Owner::findOrFail($id)->delete();
+
+        return redirect()->route('admin.owners.index')->with([
+            'msg' => '登録内容を削除しました。',
+            'status' => 'alert',
+        ]);
     }
 }
