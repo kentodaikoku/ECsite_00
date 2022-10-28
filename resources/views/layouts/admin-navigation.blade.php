@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('admin.owners.index')" :active="request()->routeIs('admin.owners.index')">
                         {{ __('Owners') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.expired-owners.index')" :active="request()->routeIs('admin..expired-owners.index')">
+                        {{ __('ExpiredOwners') }}
+                    </x-nav-link>
                 </div>
             </div>
 
