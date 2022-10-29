@@ -77,6 +77,9 @@
             <x-responsive-nav-link :href="route('admin.owners.index')" :active="request()->routeIs('admin.owners.index')">
                 {{ __('Owners') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.expired-owners.index')" :active="request()->routeIs('admin.expired-owners.index')">
+                {{ __('ExpiredOwners') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
