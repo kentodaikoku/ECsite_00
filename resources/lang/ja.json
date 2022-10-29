@@ -1,5 +1,9 @@
 {
     "Whoops! Something went wrong.": "入力エラーがありました。",
     "Owners": "オーナー管理",
-    "ExpiredOwners": "期限切れオーナー一覧"
+    "ExpiredOwners": "期限切れオーナー一覧",
+    "results": "件中",
+    "to": "~",
+    "of": "件",
+    "Showing": "表示"
 }
