@@ -45,6 +45,7 @@
                         </tbody>
                     </table>
                 </div>
+                {{ $owners->links() }}
             </div>
         </section>
     </x-contents>
