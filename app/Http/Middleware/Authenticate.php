@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Route;
 
 class Authenticate extends Middleware
 {
@@ -20,9 +21,12 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             // return route('login');
-            if (\Route::is('owner.*')) return rotue($this->owner_route);
-            if (\Route::is('admin.*')) return route($this->admin_route);
-
+            if (Route::is('owner.*')) {
+                return route($this->owner_route);
+            }
+            if (Route::is('admin.*')) {
+                return route($this->admin_route);
+            }
             return route($this->user_route);
         }
     }

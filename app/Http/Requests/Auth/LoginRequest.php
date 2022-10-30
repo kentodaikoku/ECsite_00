@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
+use Illuminate\Support\Facades\Log;
+
 class LoginRequest extends FormRequest
 {
     /**
@@ -46,10 +48,18 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         // ガード追加
-        // if ($this->routeIs('owner.*')) {}
-        $guard = $this->routeIs('owner.*') ? 'owners' : '';
-        $guard = $this->routeIs('admin.*') ? 'admin' : '';
-        $guard = $this->routeIs('user.*') ? 'users' : '';
+        if ($this->routeIs('owner.*')) {
+            $guard = 'owners';
+        }
+        if ($this->routeIs('admin.*')) {
+            $guard = 'admin';
+        }
+        if ($this->routeIs('user.*')) {
+            $guard = 'users';
+        }
+
+        // ガードログ確認
+        Log::debug('guald is ' . $guard);
 
         // ガードごとのリクエストチェック
         if (! Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
