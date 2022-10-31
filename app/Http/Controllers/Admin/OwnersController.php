@@ -44,6 +44,7 @@ class OwnersController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:owners'],
+            'shop' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -57,7 +58,7 @@ class OwnersController extends Controller
 
                 Shop::create([
                     'owner_id' => $owner->id,
-                    'name' => '店名',
+                    'name' => $request->shop,
                     'information' => '',
                     'filename' => '',
                     'is_selling' => true
