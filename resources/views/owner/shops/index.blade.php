@@ -6,6 +6,7 @@
     </x-slot>
 
     <x-contents>
+        <x-flash-msg />
         <div class="w-1/2 p-4">
             <a href="{{ route('owner.shops.edit', ['shop' => $shop->id]) }}">
                 <div class="border rounded-md p-4">
@@ -17,13 +18,7 @@
                         @endif
                     </div>
                     <div class="text-xl">{{ $shop->name }}</div>
-                    <div>
-                        @if (empty($shop->filename))
-                            <img src="{{ asset('images/no_image-e1588050278956.png') }}" alt="">
-                        @else
-                            <img src="{{ asset('storage/shops/' . $shop->filename) }}" alt="">
-                        @endif
-                    </div>
+                    <x-shop-thumbnail :filename="$shop->filename" />
                 </div>
             </a>
         </div>

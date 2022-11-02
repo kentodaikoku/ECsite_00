@@ -62,14 +62,12 @@ class OwnersController extends Controller
                     'information' => '',
                     'filename' => '',
                     'is_selling' => true
-                ], 2);
-            });
-
+                ]);
+            }, 2);
         } catch (Throwable $e) {
             Log::error($e);
             throw $e;
         }
-
 
         return redirect()->route('admin.owners.index')->with([
             'msg' => '登録完了しました。',
