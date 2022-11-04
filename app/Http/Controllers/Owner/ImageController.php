@@ -8,6 +8,7 @@ use App\Models\Image;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -68,7 +69,10 @@ class ImageController extends Controller
             }
         }
 
-        return redirect()->route('owner.images.index');
+        return redirect()->route('owner.images.index')->with([
+            'msg' => '画像を登録しました。',
+            'status' => 'info'
+        ]);
     }
 
     /**
@@ -79,7 +83,9 @@ class ImageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $image = Image::findOrFail($id);
+
+        return view('owner.images.edit', compact('image'));
     }
 
     /**
@@ -91,7 +97,18 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => ['string', 'max:255']
+        ]);
+
+        $image = Image::findOrFail($id);
+        $image->title = $request->title;
+        $image->save();
+
+        return redirect()->route('owner.images.index')->with([
+            'msg' => '画像情報を更新しました。',
+            'status' => 'info'
+        ]);
     }
 
     /**
@@ -102,6 +119,18 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $image = Image::findOrFail($id);
+
+        $filePath = 'public/products/' . $image->filename;
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+
+        $image->delete();
+
+        return redirect()->route('owner.images.index')->with([
+            'msg' => '画像情報を削除しました。',
+            'status' => 'alert'
+        ]);
     }
 }

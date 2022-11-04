@@ -129,7 +129,7 @@ class OwnersController extends Controller
      */
     public function destroy($id)
     {
-        Owner::findOrFail($id)->delete();
+        Owner::findOrFail($id)->delete(); //softDelete
 
         return redirect()->route('admin.owners.index')->with([
             'msg' => '登録内容を削除しました。',
