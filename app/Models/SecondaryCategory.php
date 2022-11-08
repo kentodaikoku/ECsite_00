@@ -12,6 +12,6 @@ class SecondaryCategory extends Model
 
     public function primary()
     {
-        return $this->belongsTo(PrimaryCategory::class);
+        return $this->belongsTo(PrimaryCategory::class, 'primary_category_id');
     }
 }
