@@ -6,7 +6,7 @@
     </x-slot>
 
     <x-contents>
-        <x-flash-msg />
+        <x-flash-msg status="{{ session('status') }}" />
         <div class="w-1/2 p-4">
             <a href="{{ route('owner.shops.edit', ['shop' => $shop->id]) }}">
                 <div class="border rounded-md p-4">
@@ -18,7 +18,7 @@
                         @endif
                     </div>
                     <div class="text-xl">{{ $shop->name }}</div>
-                    <x-shop-thumbnail :filename="$shop->filename" />
+                    <x-thumbnail :filename="$shop->filename" type="shops" />
                 </div>
             </a>
         </div>

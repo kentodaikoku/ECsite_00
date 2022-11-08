@@ -9,6 +9,11 @@ class ImageService
 {
     public static function upload($imageFile, $folderName)
     {
+        // dd($imageFile);
+        if (is_array($imageFile)) {
+            $imageFile = $imageFile['image'];
+        }
+
         // Storage::putFile('public/' . $folderName . '/', $imageFile);
         $fileName = uniqid(rand() . '_');
         $extension = $imageFile->extension();
