@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Owner\ShopController;
 use App\Http\Controllers\Owner\ImageController;
+use App\Http\Controllers\Owner\ProductController;
 
 Route::get('/', function () {
     return view('owner.welcome');
@@ -28,8 +29,8 @@ Route::prefix('shops')->middleware('auth:owners')->group(function () {
     Route::delete('destroy/{shop}', [ShopController::class, 'destroy'])->name('shops.destroy');
 });
 
-Route::resource('images', ImageController::class)
-->middleware('auth:owners')->except('show');
+Route::resource('images', ImageController::class)->middleware('auth:owners')->except('show');
+Route::resource('products', ProductController::class)->middleware('auth:owners')->except('show');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create']) //ユーザー登録画面
