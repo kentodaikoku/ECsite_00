@@ -3,15 +3,14 @@
     if ($name === 'image2') {$modal = 'modal-2';}
     if ($name === 'image3') {$modal = 'modal-3';}
     if ($name === 'image4') {$modal = 'modal-4';}
+    if ($name === 'image5') {$modal = 'modal-5';}
 @endphp
 
 <div class="modal micromodal-slide" id="{{ $modal }}" aria-hidden="true">
 <div class="modal__overlay" tabindex="-1" data-micromodal-close>
     <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="{{ $modal }}-title">
     <header class="modal__header">
-        <h2 class="text-x1 text-gray-700" id="{{ $modal }}-title">
-        ファイルを選択してください
-        </h2>
+        <h2 class="text-x1 text-gray-700" id="{{ $modal }}-title">ファイルを選択してください</h2>
         <button type="button" class="modal__close" aria-label="Close modal" data-micromodal-close></button>
     </header>
     <main class="modal__content" id="{{ $modal }}-content">

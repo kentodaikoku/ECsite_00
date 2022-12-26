@@ -28,6 +28,7 @@
                 <x-select-image name="image2" :images="$images" />
                 <x-select-image name="image3" :images="$images" />
                 <x-select-image name="image4" :images="$images" />
+                <x-select-image name="image5" :images="$images" />
 
                 <div class="p-2 w-full flex justify-around mt-4">
                     <button type="button" onclick="location.href='{{ route('owner.products.index') }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
@@ -36,7 +37,7 @@
             </div>
         </form>
     </x-contents>
-    <script> //TODO: js設定
+    <script>
         'use strict'
         const images = document.querySelectorAll('.image')
         images.forEach(image => { //１つずつ繰り返す
