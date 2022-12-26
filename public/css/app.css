@@ -1365,13 +1365,13 @@ select{
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
-.text-xs{
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
 .text-base{
   font-size: 1rem;
   line-height: 1.5rem;
+}
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 .text-2xl{
   font-size: 1.5rem;
@@ -1639,13 +1639,17 @@ select{
   --tw-border-opacity: 1;
   border-color: rgb(165 180 252 / var(--tw-border-opacity));
 }
-.focus\:border-gray-900:focus{
-  --tw-border-opacity: 1;
-  border-color: rgb(17 24 39 / var(--tw-border-opacity));
-}
 .focus\:border-blue-500:focus{
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+.focus\:border-indigo-500:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity));
+}
+.focus\:border-gray-900:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(17 24 39 / var(--tw-border-opacity));
 }
 .focus\:border-indigo-700:focus{
   --tw-border-opacity: 1;
