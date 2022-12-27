@@ -14,9 +14,9 @@ use App\Http\Controllers\Owner\ShopController;
 use App\Http\Controllers\Owner\ImageController;
 use App\Http\Controllers\Owner\ProductController;
 
-Route::get('/', function () {
-    return view('owner.welcome');
-});
+// Route::get('/', function () {
+//     return view('owner.welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('owner.dashboard');
@@ -33,10 +33,10 @@ Route::resource('images', ImageController::class)->middleware('auth:owners')->ex
 Route::resource('products', ProductController::class)->middleware('auth:owners')->except('show');
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create']) //ユーザー登録画面
-                ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create']) //ユーザー登録画面
+    //             ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']); //ユーザー登録処理
+    // Route::post('register', [RegisteredUserController::class, 'store']); //ユーザー登録処理
 
     Route::get('login', [AuthenticatedSessionController::class, 'create']) //ログイン画面
                 ->name('login');
