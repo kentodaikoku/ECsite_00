@@ -121,11 +121,16 @@ class ImageController extends Controller
     {
         $image = Image::findOrFail($id);
 
+        // 商品に画像が使われていた際の処理
+        ImageService::updateNullInProduct($image);
+
+        // ストレージから該当ファイルを削除
         $filePath = 'public/products/' . $image->filename;
         if (Storage::exists($filePath)) {
             Storage::delete($filePath);
         }
 
+        // DBから該当情報削除
         $image->delete();
 
         return redirect()->route('owner.images.index')->with([
