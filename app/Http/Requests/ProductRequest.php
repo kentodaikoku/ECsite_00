@@ -26,16 +26,29 @@ class ProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:50'],
             'information' => ['required', 'string', 'max:100'],
-            'price' => ['required', 'integer'],
+            'price' => ['required', 'integer', 'min:0'],
             'sort_order' => ['nullable', 'integer'],
-            'quantity' => ['required', 'integer'],
+            'quantity' => ['required', 'integer', 'between:0,99'],
             'shop_id' => ['required', 'exists:shops,id'],
             'category' => ['required', 'exists:secondary_categories,id'],
             'image1' => ['nullable', 'exists:images,id'],
             'image2' => ['nullable', 'exists:images,id'],
             'image3' => ['nullable', 'exists:images,id'],
             'image4' => ['nullable', 'exists:images,id'],
-            'is_selling' => ['required'],
+            'is_selling' => ['required', 'boolean'] ,
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => '商品名',
+            'information' => '商品情報',
+            'price' => '価格',
+            'sort_order' => '表示順',
+            'quantity' => '在庫',
+            'shop_id' => '販売する店舗',
+            'category' => 'カテゴリー',
         ];
     }
 }

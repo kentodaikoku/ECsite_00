@@ -62,7 +62,6 @@ class ProductController extends Controller
                     'information' => $request->information,
                     'price' => $request->price,
                     'sort_order' => $request->sort_order,
-                    'quantity' => $request->quantity,
                     'shop_id' => $request->shop_id,
                     'secondary_category_id' => $request->category,
                     'image1' => $request->image1,
@@ -78,7 +77,7 @@ class ProductController extends Controller
                     'quantity' => $request->quantity,
                 ]);
             }, 2);
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             Log::error($e);
             throw $e;
         }
@@ -105,9 +104,62 @@ class ProductController extends Controller
         return view('owner.products.edit', compact('product', 'quantity', 'shops', 'images', 'categories'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $request->validate([
+            'current_quantity' => 'required|integer',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $quantity = Stock::where('product_id', $product->id)->sum('quantity');
+
+        // 編集画面時に在庫数が変更されていた場合
+        if ($request->current_quantity !== $quantity) {
+            $id = $request->route()->parameter('product');
+            return redirect()->route('owner.products.edit')->with([
+                'msg' => '在庫数が変更されています。再度入力をしてください。',
+                'status' => 'alert'
+            ]);
+        }
+
+        try {
+            DB::transaction(function () use ($request, $product) {
+                $product->name = $request->name;
+                $product->information = $request->information;
+                $product->price = $request->price;
+                $product->sort_order = $request->sort_order;
+                $product->shop_id = $request->shop_id;
+                $product->secondary_category_id = $request->category;
+                $product->image1 = $request->image1;
+                $product->image2 = $request->image2;
+                $product->image3 = $request->image3;
+                $product->image4 = $request->image4;
+                $product->is_selling = $request->is_selling;
+
+                $product->save();
+
+                if ($request->type === '1') { //在庫を追加する場合
+                    $newQuantity = $request->quantity;
+                }
+                if ($request->type === '2') { //在庫を削減する場合
+                    $newQuantity = $request->quantity * -1;
+                }
+
+                Stock::create([
+                    'product_id' => $product->id,
+                    'type' => $request->type,
+                    'quantity' => $newQuantity,
+                ]);
+            }, 2);
+        } catch (Throwable $e) {
+            Log::error($e);
+            throw $e;
+        }
+
+        return redirect()->route('owner.products.index')->with([
+            'msg' => '商品情報を更新しました。',
+            'status' => 'info'
+        ]);
     }
 
     public function destroy($id)
