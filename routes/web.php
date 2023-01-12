@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ServiceTestController;
 use App\Http\Controllers\User\ItemController;
+use App\Http\Controllers\User\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,10 @@ Route::middleware('auth:users')->group(function () {
     Route::get('show/{item}', [ItemController::class, 'show'])->name('items.show');
 });
 
-
+Route::prefix('cart')->middleware('auth:users')->group(function(){
+    Route::post('add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+});
 
 // コンポーネント練習用
 Route::get('/component', function () {
