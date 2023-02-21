@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendThanksMail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cart;
@@ -54,10 +55,13 @@ class CartController extends Controller
 
     public function checkout()
     {
+        $user = User::findOrFail(Auth::id());
+
         $items = Cart::where('user_id', Auth::id())->get();
         $products = CartService::getItemsInCart($items);
+        // メール送信
+        SendThanksMail::dispatch($products, $user);
 
-        $user = User::findOrFail(Auth::id());
         $products = $user->products; // 多対多のリレーション
 
         $lineItems = []; //stripe用配列
