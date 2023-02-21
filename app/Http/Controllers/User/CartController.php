@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendOrderMail;
 use App\Jobs\SendThanksMail;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -56,12 +57,6 @@ class CartController extends Controller
     public function checkout()
     {
         $user = User::findOrFail(Auth::id());
-
-        $items = Cart::where('user_id', Auth::id())->get();
-        $products = CartService::getItemsInCart($items);
-        // メール送信
-        SendThanksMail::dispatch($products, $user);
-
         $products = $user->products; // 多対多のリレーション
 
         $lineItems = []; //stripe用配列
@@ -113,6 +108,15 @@ class CartController extends Controller
 
     public function success()
     {
+        $user = User::findOrFail(Auth::id());
+        $items = Cart::where('user_id', Auth::id())->get();
+        $products = CartService::getItemsInCart($items);
+        // メール送信
+        SendThanksMail::dispatch($products, $user);
+        foreach ($products as $product) {
+            SendOrderMail::dispatch($product, $user);
+        }
+
         Cart::where('user_id', Auth::id())->delete();
 
         return redirect()->route('user.items.index');
