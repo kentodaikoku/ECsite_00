@@ -1,9 +1,10 @@
-## インストール後の実施事項
+# ECサイト
 
-画像のダミーデータは public/imagesフォルダ内に sample1.jpg 〜 sample6.jpg として 保存。
+## 概要
 
-php artisan storage:link で storageフォルダにリンク後、
-
-storage/app/public/productsフォルダ内に 保存すると表示される。 (productsフォルダがない場合は作成。)
-
-ショップの画像も表示する場合は、 storage/app/public/shopsフォルダを作成し 画像を保存する。
+- バージョン：laravel8
+- 認証用ライブラリ：laravel breeze
+- 使用ツール：
+  - mailtrap
+  - stripe
+  - tailwindcss
