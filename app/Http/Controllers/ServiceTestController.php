@@ -24,7 +24,7 @@ class ServiceTestController extends Controller
         $sample = app()->make('sample');
         $sample->run();
 
-        dd($test, app());
+        // dd($test, app());
     }
 
     public function showServiceProvider()
@@ -34,7 +34,7 @@ class ServiceTestController extends Controller
 
         $sample = app()->make('ServiceProviderTest');
 
-        dd($sample, $password, $encrypt->decrypt($password));
+        // dd($sample, $password, $encrypt->decrypt($password));
     }
 }
 

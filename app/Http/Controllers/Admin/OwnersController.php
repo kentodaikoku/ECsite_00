@@ -24,13 +24,7 @@ class OwnersController extends Controller
     public function index()
     {
         $owners = Owner::select('id', 'name', 'email', 'created_at')->paginate(3);
-        // $q_owner = DB::table('owners')->select('name')->get();
-        // $q_first = DB::table('owners')->select('name')->first();
-        // $collect = collect([
-        //     'name' => 'test'
-        // ]);
 
-        // dd($owner, $q_owner, $q_first, $collect);
         return view('admin.owners.index', compact('owners'));
     }
 
